@@ -1,16 +1,45 @@
-It works !
-If you're seeing this page via a web browser, it means you've setup Tomcat successfully. Congratulations!
+To remove Apache Tomcat from a Linux system, you'll need to uninstall the Tomcat package and delete any remaining directories associated with the installation. The specific steps may vary slightly depending on how you installed Tomcat and your Linux distribution. Here's a general approach:
 
-This is the default Tomcat home page. It can be found on the local filesystem at: /var/lib/tomcat9/webapps/ROOT/index.html
+1. **Stop Tomcat**: Before uninstalling Tomcat, make sure it's not running. You can stop Tomcat using the following command:
 
-Tomcat veterans might be pleased to learn that this system instance of Tomcat is installed with CATALINA_HOME in /usr/share/tomcat9 and CATALINA_BASE in /var/lib/tomcat9, following the rules from /usr/share/doc/tomcat9-common/RUNNING.txt.gz.
+   ```bash
+   sudo systemctl stop tomcat9
+   ```
 
-You might consider installing the following packages, if you haven't already done so:
+   Replace `tomcat9` with the appropriate service name if you're using a different version of Tomcat.
 
-tomcat9-docs: This package installs a web application that allows to browse the Tomcat 9 documentation locally. Once installed, you can access it by clicking here.
+2. **Uninstall the Tomcat package**: If you installed Tomcat using your distribution's package manager (e.g., `apt`, `yum`, `zypper`), you can uninstall it using the corresponding command. For example, on Ubuntu/Debian:
 
-tomcat9-examples: This package installs a web application that allows to access the Tomcat 9 Servlet and JSP examples. Once installed, you can access it by clicking here.
+   ```bash
+   sudo apt remove tomcat9
+   ```
 
-tomcat9-admin: This package installs two web applications that can help managing this Tomcat instance. Once installed, you can access the manager webapp and the host-manager webapp.
+   Replace `tomcat9` with the appropriate package name if you're using a different version of Tomcat or a different Linux distribution.
 
-NOTE: For security reasons, using the manager webapp is restricted to users with role "manager-gui". The host-manager webapp is restricted to users with role "admin-gui". Users are defined in /etc/tomcat9/tomcat-users.xml.
+3. **Remove Tomcat directories**: After uninstalling the package, you may want to delete any remaining directories associated with Tomcat. Common directories include:
+
+   - `/var/lib/tomcat9`: This directory typically contains the Tomcat installation files, web applications, and temporary files.
+   - `/etc/tomcat9`: Configuration files for Tomcat.
+   - `/usr/share/tomcat9`: Additional files used by Tomcat.
+   - `/var/log/tomcat9`: Log files for Tomcat.
+
+   You can delete these directories using the `rm` command:
+
+   ```bash
+   sudo rm -rf /var/lib/tomcat9
+   sudo rm -rf /etc/tomcat9
+   sudo rm -rf /usr/share/tomcat9
+   sudo rm -rf /var/log/tomcat9
+   ```
+
+   Be cautious when using the `rm` command with the `-rf` option, as it will recursively delete directories and their contents without prompting for confirmation.
+
+4. **Remove Tomcat user**: Some distributions create a dedicated user for running Tomcat. If your distribution does this, you can remove the Tomcat user using the `userdel` command:
+
+   ```bash
+   sudo userdel tomcat
+   ```
+
+   Replace `tomcat` with the actual username if it's different on your system.
+
+After completing these steps, Apache Tomcat should be fully removed from your Linux system.
