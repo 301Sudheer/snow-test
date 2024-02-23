@@ -1,0 +1,54 @@
+If you're still seeing Tomcat processes running after executing the commands to remove Tomcat and its associated files, it's possible that not all Tomcat components were successfully removed, or there might be other processes related to Tomcat running on your system.
+
+Here are some additional steps you can take to ensure Tomcat is completely removed:
+
+1. **Kill Tomcat Processes**: You can use the `killall` command to terminate all processes with the name `tomcat`. Run:
+
+    ```bash
+    sudo killall -9 tomcat
+    ```
+
+    This will forcefully terminate all processes named `tomcat`.
+
+2. **Check Running Processes**: Use the `ps` command to check if any Tomcat processes are still running:
+
+    ```bash
+    ps aux | grep tomcat
+    ```
+
+    If you see any Tomcat processes listed, note their process IDs (PIDs) and use the `kill` command to terminate them individually:
+
+    ```bash
+    sudo kill <PID>
+    ```
+
+    Replace `<PID>` with the actual process ID.
+
+3. **Search for Tomcat Files**: You can search for any remaining Tomcat-related files or directories using the `find` command:
+
+    ```bash
+    sudo find / -name "*tomcat*" -print
+    ```
+
+    This command will search the entire filesystem (`/`) for files or directories containing the string "tomcat" in their name.
+
+4. **Check Services**: Use the `systemctl` command to check if the Tomcat service is still registered:
+
+    ```bash
+    systemctl status tomcat9
+    ```
+
+    If it's still listed, you can disable and stop the service:
+
+    ```bash
+    sudo systemctl disable tomcat9
+    sudo systemctl stop tomcat9
+    ```
+
+5. **Reboot the Instance**: If you've completed the above steps and you're still encountering issues, you can try rebooting the EC2 instance to ensure all changes take effect:
+
+    ```bash
+    sudo reboot
+    ```
+
+After performing these additional steps, Tomcat and any remaining related processes should be fully removed from your EC2 instance.
